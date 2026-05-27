@@ -53,7 +53,7 @@ class Server:
         # Placeholder implementation - replace with actual analysis logic
         normalized_depth_map = self.normalize(depth_map)
         rugosity = self.analysis.cal_gradient_rugosity(
-            normalized_depth_map, kernal_size=147
+            normalized_depth_map,
         )
         fractal_dimension = self.analysis.cal_fractal_dimension(normalized_depth_map)
 

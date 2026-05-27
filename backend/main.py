@@ -15,7 +15,7 @@ from server.schemas import (
     ReferencePoint,
 )
 from server.server import Server
-from server.utils.image import read_image_file_to_BGR
+from server.utils.image import read_image_file, rgb_image_to_bgr
 from server.utils.logger import get_logger
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -45,7 +45,7 @@ async def depth_estimation(
     model_name: DepthModelName = Form(DepthModelName.DEPTH_ANYTHING_V2),
 ) -> DepthEstimationResponse:
     # Read the uploaded image file into a numpy array (BGR format)
-    image = await read_image_file_to_BGR(image)
+    image = await read_image_file(image)
     depth_map = _server.predict_depth(image, model_name)
 
     # Encode the float32 depth map as a base64 string
@@ -101,7 +101,8 @@ async def estimate(
     parsed = [ReferencePoint(**rp) for rp in json.loads(reference_points)]
 
     # Read the uploaded image file into a numpy array (BGR format)
-    image = await read_image_file_to_BGR(image)
+    image = await read_image_file(image)
+    image = rgb_image_to_bgr(image)
     depth_map = _server.predict_depth(image, model_name)
 
     # Encode the float32 depth map as a base64 string

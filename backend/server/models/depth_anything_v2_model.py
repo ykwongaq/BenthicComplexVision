@@ -36,8 +36,8 @@ class DepthAnythingV2Model:
         model = model.to(device)
         model.eval()
 
-        self.input_size = 518
-        # self.input_size = 1036
+        # self.input_size = 518
+        self.input_size = 1036
 
         _logger_.info("Loaded model from %s", checkpoint)
 
@@ -49,8 +49,5 @@ class DepthAnythingV2Model:
                 depth = model.infer_image(image, input_size=self.input_size)
 
         torch.cuda.empty_cache()
-
-        depth = (depth - depth.min()) / (depth.max() - depth.min() + 1e-8)
-        depth = 1 - depth
 
         return depth
