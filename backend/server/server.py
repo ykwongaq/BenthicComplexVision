@@ -60,7 +60,7 @@ class Server:
         # If the reference points are provided, rescale the normalized depth map to the actual depth values and calculate colony height
         # OR else, return None
         if len(reference_points) > 0:
-            _, _, colony_height = self.analysis.cal_height_range(
+            colony_height = self.analysis.cal_colony_height(
                 normalized_depth_map, reference_points
             )
         else:
