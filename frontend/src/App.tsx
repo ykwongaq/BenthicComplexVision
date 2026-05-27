@@ -30,7 +30,7 @@ function App() {
 					</main>
 					<footer className="app-footer">
 						<p>
-							MonoBenthicComplexTool (MBCT) &mdash; Open-Access AI Tool for
+							BenthicComplexVision (BCV) &mdash; Open-Access AI Tool for
 							Structural Complexity Estimation
 						</p>
 					</footer>

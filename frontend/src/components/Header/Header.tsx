@@ -13,8 +13,8 @@ function Header() {
 				<span className={styles.badge}>Open-Access AI Tool</span>
 
 				<h1 className={styles.title}>
-					Mono<span className={styles.titleAccent}>Benthic</span>ComplexTool
-					<span className={styles.titleAbbr}> (MBCT)</span>
+					Benthic<span className={styles.titleAccent}>Complex</span>Vision
+					<span className={styles.titleAbbr}> (BCV)</span>
 				</h1>
 
 				<p className={styles.subtitle}>
