@@ -184,6 +184,24 @@ function ImagePanel({ onEstimate }: Props) {
 		projectDispatch({ type: "REMOVE_BBOX_TEMPLATE", payload: { id } });
 	};
 
+	const handleFullImage = () => {
+		if (currentImageId === null) return;
+		const current = dataList.find((d) => d.id === currentImageId);
+		if (!current) return;
+		projectDispatch({
+			type: "SET_BBOX",
+			payload: {
+				id: currentImageId,
+				bbox: {
+					x_top_left: 0,
+					y_top_left: 0,
+					width: current.image.imageWidth,
+					height: current.image.imageHeight,
+				},
+			},
+		});
+	};
+
 	const handleEstimate = () => {
 		const currentData = dataList.find((d) => d.id === currentImageId);
 		if (!currentData?.bbox) {
@@ -238,8 +256,17 @@ function ImagePanel({ onEstimate }: Props) {
 							<BoundingBoxList
 								templates={projectState.bboxTemplates}
 								liveDragBox={liveDragBox}
+								currentImageWidth={
+									dataList.find((d) => d.id === currentImageId)?.image
+										.imageWidth ?? null
+								}
+								currentImageHeight={
+									dataList.find((d) => d.id === currentImageId)?.image
+										.imageHeight ?? null
+								}
 								onApplyTemplate={handleApplyTemplate}
 								onRemoveTemplate={handleRemoveTemplate}
+								onFullImage={handleFullImage}
 							/>
 						</div>
 					</div>

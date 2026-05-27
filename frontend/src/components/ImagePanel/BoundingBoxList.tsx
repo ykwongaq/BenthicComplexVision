@@ -1,5 +1,6 @@
 import type { BBoxTemplate } from "../../types/ProjectState";
 import type { BBox } from "../../types/BBox";
+import { MaximizeIcon } from "./icons";
 import styles from "./BoundingBoxList.module.css";
 
 const PREVIEW_W = 48;
@@ -75,22 +76,45 @@ function BBoxItem({ bbox, isLive, onClick, onRemove }: ItemProps) {
 interface BoundingBoxListProps {
 	templates: BBoxTemplate[];
 	liveDragBox: BBox | null;
+	currentImageWidth: number | null;
+	currentImageHeight: number | null;
 	onApplyTemplate: (bbox: BBox) => void;
 	onRemoveTemplate: (id: number) => void;
+	onFullImage: () => void;
 }
 
 export default function BoundingBoxList({
 	templates,
 	liveDragBox,
+	currentImageWidth,
+	currentImageHeight,
 	onApplyTemplate,
 	onRemoveTemplate,
+	onFullImage,
 }: BoundingBoxListProps) {
 	const isEmpty = !liveDragBox && templates.length === 0;
+	const showFullImage =
+		currentImageWidth !== null && currentImageHeight !== null;
 
 	return (
 		<div className={styles.container}>
 			<p className={styles.header}>Saved Boxes</p>
 			<div className={styles.list}>
+				{showFullImage && (
+					<div
+						className={styles.fullImageItem}
+						onClick={onFullImage}
+						title="Use the entire image as the bounding box"
+					>
+						<MaximizeIcon size={16} className={styles.fullImageIcon} />
+						<div className={styles.info}>
+							<span className={styles.dims}>Full Image</span>
+							<span className={styles.unit}>
+								{currentImageWidth} × {currentImageHeight}
+							</span>
+						</div>
+					</div>
+				)}
 				{liveDragBox && <BBoxItem bbox={liveDragBox} isLive />}
 				{templates.map((t) => (
 					<BBoxItem
@@ -103,7 +127,7 @@ export default function BoundingBoxList({
 						}}
 					/>
 				))}
-				{isEmpty && (
+				{isEmpty && !showFullImage && (
 					<p className={styles.empty}>
 						Draw a bounding box on any image to save it here for reuse.
 					</p>
