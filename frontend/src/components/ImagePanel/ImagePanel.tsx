@@ -12,6 +12,7 @@ import { TrashIcon, TargetIcon, BarChartIcon, FolderOpenIcon } from "./icons";
 import type { BBox } from "../../types/BBox";
 import BoundingBoxList from "./BoundingBoxList";
 import { loadProject } from "../../services/LoadProjectService";
+import ExampleImagesBar from "./ExampleImagesBar";
 
 interface Props {
 	onEstimate?: () => void;
@@ -226,6 +227,7 @@ function ImagePanel({ onEstimate }: Props) {
 				{dataList.length === 0 ? (
 					<>
 						<ImageDropArea fileInputRef={fileInputRef} onDropFiles={addFiles} />
+						<ExampleImagesBar onLoadExample={addFiles} />
 						<div className={styles.loadProjectHint}>
 							<button
 								className={styles.loadProjectBtn}
