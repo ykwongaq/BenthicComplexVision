@@ -1,4 +1,5 @@
 .header {
+  position: relative;
   background: linear-gradient(135deg, #0d1f2d 0%, #1a5276 65%, #1f618d 100%);
   padding: 56px 20px 48px;
   text-align: center;
@@ -62,6 +63,64 @@
   @media (max-width: 768px) {
     font-size: 15px;
   }
+}
+
+.tutorialButton {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease,
+    border-color 0.18s ease;
+
+  @media (max-width: 768px) {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+.tutorialButton:hover {
+  color: #48c9b0;
+  background: rgba(72, 201, 176, 0.12);
+  border-color: rgba(72, 201, 176, 0.4);
+}
+
+.tutorialButton svg {
+  flex-shrink: 0;
+}
+
+.tutorialTooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  white-space: nowrap;
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: rgba(13, 31, 45, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  opacity: 0;
+  transform: translateY(-3px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.tutorialButton:hover .tutorialTooltip,
+.tutorialButton:focus-visible .tutorialTooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .metricsBar {
