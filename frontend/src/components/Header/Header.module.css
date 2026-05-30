@@ -65,10 +65,22 @@
   }
 }
 
-.tutorialButton {
+.headerActions {
   position: absolute;
   top: 18px;
   right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+.tutorialButton {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -81,17 +93,18 @@
   cursor: pointer;
   transition: color 0.18s ease, background 0.18s ease,
     border-color 0.18s ease;
-
-  @media (max-width: 768px) {
-    top: 14px;
-    right: 14px;
-  }
 }
 
 .tutorialButton:hover {
   color: #48c9b0;
   background: rgba(72, 201, 176, 0.12);
   border-color: rgba(72, 201, 176, 0.4);
+}
+
+.youtubeButton:hover {
+  color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.12);
+  border-color: rgba(255, 77, 77, 0.4);
 }
 
 .tutorialButton svg {
