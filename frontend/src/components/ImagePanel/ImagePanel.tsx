@@ -212,15 +212,50 @@ function ImagePanel({ onEstimate }: Props) {
 		onEstimate?.();
 	};
 
+	// Contextual guidance that follows the user's progress through the workflow.
+	const currentData = dataList.find((d) => d.id === currentImageId);
+	const guide =
+		dataList.length === 0
+			? {
+					step: 1,
+					title: "Upload an image",
+					desc: "Drag & drop or browse a vertically-oriented, top-down photo of an underwater habitat to get started.",
+				}
+			: !currentData?.bbox
+				? {
+						step: 2,
+						title: "Select the area of interest",
+						desc: "Drag a bounding box on the image to mark the region you want to analyze.",
+					}
+				: {
+						step: 3,
+						title: "Estimate structural complexity",
+						desc: "Click Estimate to run the analysis.",
+					};
+
 	return (
 		<section className={styles.section}>
 			<div className={styles.sectionHeader}>
 				<h2 className={styles.sectionTitle}>Image Analysis</h2>
-				<p className={styles.sectionDesc}>
-					Upload vertically-oriented, top-down photos of underwater habitats to
-					measure structural complexity. <br /> Drag the bounding box to select
-					the area you want to analyze.
-				</p>
+				{/* key={guide.step} remounts the banner so the entrance animation
+				    replays on every step change, drawing the user's attention. */}
+				<div key={guide.step} className={styles.guide}>
+					<span className={styles.guideBadge}>Step {guide.step} of 3</span>
+					<div className={styles.guideText}>
+						<span className={styles.guideTitle}>{guide.title}</span>
+						<span className={styles.guideDesc}>{guide.desc}</span>
+					</div>
+					<div className={styles.guideDots} aria-hidden="true">
+						{[1, 2, 3].map((n) => (
+							<span
+								key={n}
+								className={`${styles.guideDot} ${
+									n === guide.step ? styles.guideDotActive : ""
+								} ${n < guide.step ? styles.guideDotDone : ""}`}
+							/>
+						))}
+					</div>
+				</div>
 			</div>
 
 			<div className={styles.card}>
