@@ -46,6 +46,7 @@ async def depth_estimation(
 ) -> DepthEstimationResponse:
     # Read the uploaded image file into a numpy array (BGR format)
     image = await read_image_file(image)
+    image = rgb_image_to_bgr(image)
     depth_map = _server.predict_depth(image, model_name)
 
     # Encode the float32 depth map as a base64 string
