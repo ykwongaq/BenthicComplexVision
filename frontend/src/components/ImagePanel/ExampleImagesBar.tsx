@@ -4,16 +4,38 @@ import sample1 from "../../assets/images/sample_1.jpg";
 import sample2 from "../../assets/images/sample_2.jpg";
 import sample3 from "../../assets/images/sample_3.jpg";
 import sample4 from "../../assets/images/sample_4.jpg";
+import sample5 from "../../assets/images/sample_5.jpg";
 
 interface ExampleImagesBarProps {
 	onLoadExample: (files: File[]) => void;
 }
 
 const EXAMPLE_IMAGES = [
-	{ id: "sample_1", label: "Sample 1", src: sample1 },
-	{ id: "sample_2", label: "Sample 2", src: sample2 },
-	{ id: "sample_3", label: "Sample 3", src: sample3 },
-	{ id: "sample_4", label: "Sample 4", src: sample4 },
+	{
+		id: "sample_1",
+		label: "Sample 1",
+		src: sample1,
+		copyright: "© UNDER THE POLE",
+	},
+	{
+		id: "sample_2",
+		label: "Sample 2",
+		src: sample2,
+		copyright: "© UNDER THE POLE",
+	},
+	{
+		id: "sample_3",
+		label: "Sample 3",
+		src: sample3,
+		copyright: "© UNDER THE POLE",
+	},
+	{
+		id: "sample_4",
+		label: "Sample 4",
+		src: sample4,
+		copyright: "© UNDER THE POLE",
+	},
+	{ id: "sample_5", label: "Sample 5", src: sample5, copyright: null },
 ];
 
 function ExampleImagesBar({ onLoadExample }: ExampleImagesBarProps) {
@@ -51,6 +73,15 @@ function ExampleImagesBar({ onLoadExample }: ExampleImagesBarProps) {
 						title={`Load ${img.label}`}
 					>
 						<img src={img.src} alt={img.label} className={styles.image} />
+						{img.copyright && (
+							<div
+								className={styles.copyrightBadge}
+								aria-label="Copyright information"
+							>
+								<span className={styles.copyrightIcon}>©</span>
+								<span className={styles.copyrightTooltip}>{img.copyright}</span>
+							</div>
+						)}
 						<div className={styles.overlay}>
 							{isLoading === img.id + ".jpg" ? (
 								<div className={styles.spinner} />
