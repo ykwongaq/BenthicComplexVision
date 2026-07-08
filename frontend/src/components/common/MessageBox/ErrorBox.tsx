@@ -4,10 +4,17 @@ interface ErrorBoxProps {
 	open: boolean;
 	title?: string;
 	message: string;
+	supportMessage?: string;
 	onClose: () => void;
 }
 
-function ErrorBox({ open, title = "Error", message, onClose }: ErrorBoxProps) {
+function ErrorBox({
+	open,
+	title = "Error",
+	message,
+	supportMessage,
+	onClose,
+}: ErrorBoxProps) {
 	if (!open) return null;
 
 	return (
@@ -18,10 +25,7 @@ function ErrorBox({ open, title = "Error", message, onClose }: ErrorBoxProps) {
 			aria-modal="true"
 			aria-labelledby="errorbox-title"
 		>
-			<div
-				className={styles.dialog}
-				onClick={(e) => e.stopPropagation()}
-			>
+			<div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
 				<div className={styles.header}>
 					<svg
 						className={styles.icon}
@@ -43,6 +47,9 @@ function ErrorBox({ open, title = "Error", message, onClose }: ErrorBoxProps) {
 					</h3>
 				</div>
 				<p className={styles.message}>{message}</p>
+				{supportMessage && (
+					<p className={styles.supportMessage}>{supportMessage}</p>
+				)}
 				<div className={styles.actions}>
 					<button className={styles.okBtn} onClick={onClose}>
 						OK

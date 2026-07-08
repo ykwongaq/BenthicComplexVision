@@ -45,6 +45,13 @@
   margin: 0;
 }
 
+.supportMessage {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: -4px 0 0;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

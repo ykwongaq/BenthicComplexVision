@@ -79,12 +79,23 @@ function AnalysisPanel() {
 	const [isDownloading, setIsDownloading] = useState(false);
 	const [errorBoxOpen, setErrorBoxOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [errorSupportMessage, setErrorSupportMessage] = useState("");
 
 	const prevImageIdRef = useRef<number | null | undefined>(undefined);
 	const prevBBoxRef = useRef<BBox | undefined>(undefined);
 	const estimateHandleRef = useRef<ApiRequestHandle | null>(null);
 	const estimateGenRef = useRef(0);
 	const prevModelNameRef = useRef<string | undefined>(undefined);
+
+	const openErrorBox = (message: string, showRestartContact: boolean) => {
+		setErrorMessage(message);
+		setErrorSupportMessage(
+			showRestartContact
+				? "We apologize for the inconvenience. This service is running on limited server resources. If the issue persists, please contact ykwongaq@gmail.com to request a server restart."
+				: "",
+		);
+		setErrorBoxOpen(true);
+	};
 
 	const currentImageId = annotationSessionState.currentImageId;
 	const currentData = projectState.dataList.find(
@@ -107,7 +118,10 @@ function AnalysisPanel() {
 		const bboxChanged =
 			!isInitialMount && !imageChanged && currentData.bbox !== prevBBox;
 		const modelChanged =
-			!isInitialMount && !imageChanged && !bboxChanged && annotationSessionState.modelName !== prevModelName;
+			!isInitialMount &&
+			!imageChanged &&
+			!bboxChanged &&
+			annotationSessionState.modelName !== prevModelName;
 		const refPointsChanged =
 			!isInitialMount && !imageChanged && !bboxChanged && !modelChanged;
 
@@ -139,8 +153,7 @@ function AnalysisPanel() {
 					},
 					onError: (err) => {
 						if (gen !== estimateGenRef.current) return;
-						setErrorMessage(err.message || "Complexity analysis failed.");
-						setErrorBoxOpen(true);
+						openErrorBox(err.message || "Complexity analysis failed.", true);
 						setIsLoading(false);
 					},
 				},
@@ -176,8 +189,7 @@ function AnalysisPanel() {
 						},
 						onError: (err) => {
 							if (gen !== estimateGenRef.current) return;
-							setErrorMessage(err.message || "Estimation failed.");
-							setErrorBoxOpen(true);
+							openErrorBox(err.message || "Estimation failed.", true);
 							setIsLoading(false);
 						},
 					},
@@ -187,10 +199,10 @@ function AnalysisPanel() {
 			})
 			.catch((err) => {
 				if (gen !== estimateGenRef.current) return;
-				setErrorMessage(
+				openErrorBox(
 					err instanceof Error ? err.message : "Failed to crop image.",
+					false,
 				);
-				setErrorBoxOpen(true);
 				setIsLoading(false);
 			});
 
@@ -264,10 +276,7 @@ function AnalysisPanel() {
 			</div>
 			<div className={styles.reportWrap}>
 				{(isLoading || stats) && (
-					<AnalysisReport
-						data={currentData}
-						isLoading={isLoading}
-					/>
+					<AnalysisReport data={currentData} isLoading={isLoading} />
 				)}
 			</div>
 
@@ -275,6 +284,7 @@ function AnalysisPanel() {
 				open={errorBoxOpen}
 				title="Estimation failed"
 				message={errorMessage}
+				supportMessage={errorSupportMessage}
 				onClose={() => setErrorBoxOpen(false)}
 			/>
 		</section>
