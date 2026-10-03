@@ -42,9 +42,43 @@ The tool guides you through a simple, repeatable sequence:
 You can analyse one image or batch several images in a single project, switching between them
 at any time. Each image keeps its own reference points, bounding box, depth map, and results.
 
+## 2. Scope and Limitations
+
+Before using BCV, it is important to understand the conditions under which the tool performs
+reliably — and where it is likely to introduce bias.
+
+### Suitable habitats
+BCV is designed to work on **fixed, rigid marine benthic landscapes**. It is ideal for:
+- **Hard reef-building corals**
+- **Rocky substrates**
+- **Non-gorgonian coralligenous habitats**
+
+### Habitats where results will be biased
+The tool is **not well suited** to soft or flexible landscapes, including:
+- **Seagrass meadows**
+- **Gorgonian forests**
+- **Black coral forests**
+
+### Geometric limitations
+BCV works from a single top-down image and therefore shares a key limitation with traditional
+photogrammetry pipelines: it cannot recover geometry it cannot see. Expect reduced accuracy in
+the presence of:
+- **Undercuts, overhangs, holes, or tunnels** occluded from the vertical viewpoint.
+- **Dominant structural features that mask surrounding areas** — for example, very tall boomies
+  or large holes/tunnels that prevent the model from observing the adjacent surface for
+  comparison.
+
+### Image-quality requirements
+BCV performs best on **neat, clear images**:
+- **Poor visibility or low-resolution images** will introduce error in both the depth estimation
+  model and the derived structural complexity metrics.
+- **Uniform lighting** is strongly recommended. This is especially important for dark or blue
+  images collected at greater depths, where poorly configured strobes can produce light
+  saturation and shadows that degrade the depth prediction.
+
 ---
 
-## 2. Step 1 — Add an Image
+## 3. Step 1 — Add an Image
 
 When you first open BCV, the image panel is empty and offers three ways to get started.
 
@@ -72,7 +106,7 @@ results. See [Saving and Loading Projects](#10-saving-and-loading-projects).
 
 ---
 
-## 3. Step 2 — Navigate and Zoom
+## 4. Step 2 — Navigate and Zoom
 
 Once an image is loaded, it appears in the large central viewer with a thumbnail strip below.
 
@@ -91,7 +125,7 @@ The image info area shows the current filename and position in the set (for exam
 
 ---
 
-## 4. Step 3 — Draw a Bounding Box
+## 5. Step 3 — Draw a Bounding Box
 
 The **bounding box** defines the rectangular region of the image that will be analysed. A
 bounding box is **required** before you can run an estimate.
@@ -117,7 +151,7 @@ bounding box is **required** before you can run an estimate.
 
 ---
 
-## 5. Step 4 — Set the Real-World Scale (Optional)
+## 6. Step 4 — Set the Real-World Scale (Optional)
 
 Because a photo has no inherent size, BCV needs at least **two reference points** with a known
 real-world distance between them to calibrate scale. This is what makes **Colony Height** (and
@@ -151,7 +185,7 @@ the absolute geometry of the 3D model) meaningful.
 
 ---
 
-## 6. Step 5 — Run the Estimate
+## 7. Step 5 — Run the Estimate
 
 When you have (1) an image, (2) at least two reference points with distances, and (3) a bounding
 box, click **"Estimate"** (the bar-chart icon).
@@ -173,7 +207,7 @@ takes only a few seconds).
 
 ---
 
-## 7. Step 6 — Read the Complexity Metrics
+## 8. Step 6 — Read the Complexity Metrics
 
 After estimation, the **Complexity Metrics** table (the Analysis Report) appears with three
 rows:
@@ -188,7 +222,7 @@ rows:
 
 ---
 
-## 8. Step 7 — Explore the 3D Viewer
+## 9. Step 7 — Explore the 3D Viewer
 
 The **3D Viewer** shows an interactive reconstruction of the analysed region. Use the toggle
 buttons at the top to switch between three modes:
@@ -221,7 +255,7 @@ The hint bar reads: **"Left drag: rotate · Right drag: pan · Scroll: zoom"**.
 
 ---
 
-## 9. Exporting Results
+## 10. Exporting Results
 
 In the **Complexity Metrics** header you have two CSV export options:
 
@@ -237,7 +271,7 @@ and the three metrics (rugosity, fractal dimension, colony height).
 
 ---
 
-## 10. Saving and Loading Projects
+## 11. Saving and Loading Projects
 
 BCV can save your entire session — including images, reference points, bounding boxes, depth
 maps, and computed metrics — to a single project file.
@@ -256,7 +290,7 @@ When a project is loaded, BCV restores all images and results and switches to th
 ![image](./tutorial_images/11-save-load-project.png)
 ---
 
-## 11. Working with Multiple Images
+## 12. Working with Multiple Images
 
 You can analyse many images in one project:
 
@@ -269,7 +303,7 @@ You can analyse many images in one project:
 
 ---
 
-## 12. Troubleshooting & Tips
+## 13. Troubleshooting & Tips
 
 | Situation | What it means / what to do |
 |---|---|
